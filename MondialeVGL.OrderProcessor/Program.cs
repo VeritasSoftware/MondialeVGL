@@ -24,6 +24,7 @@ namespace MondialeVGL.OrderProcessor
 
             services.AddScoped<IOrderRepository>(sp => new OrderRepository(config["OrdersFilePath"]));
             services.AddScoped<IOrderService, OrderService>();
+            services.AddSingleton<IMappingService, MappingService>();
 
             var serviceProvider = services.BuildServiceProvider();
 

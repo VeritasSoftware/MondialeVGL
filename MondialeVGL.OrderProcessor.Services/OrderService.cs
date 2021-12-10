@@ -1,4 +1,5 @@
 ﻿using MondialeVGL.OrderProcessor.Repository;
+using MondialeVGL.OrderProcessor.Repository.Entities;
 using MondialeVGL.OrderProcessor.Services.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,12 @@ namespace MondialeVGL.OrderProcessor.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IMappingService _mappingService;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IMappingService mappingService)
         {
             _orderRepository = orderRepository;
+            _mappingService = mappingService;
         }
 
         public async Task<string> GetOrdersXmlAsync()
@@ -24,22 +27,7 @@ namespace MondialeVGL.OrderProcessor.Services
 
             await foreach (var order in _orderRepository.GetOrdersAsync())
             {
-                //I would do this mapping between the Entity & Model
-                //using a mapping library eg. Automapper
-                var orderModel = new OrderModel
-                {
-                    PurchaseOrderNumber = order.Header.PurchaseOrderNumber,
-                    Supplier = order.Header.Supplier,
-                    Destination = string.IsNullOrEmpty(order.Header.Destination)? GetDestination(order.Header.Supplier) : order.Header.Destination,
-                    Origin = order.Header.Origin,
-                    CargoReady = order.Header.CargoReadyDate.ToString("yyyy-MM-dd"),
-                    Lines = order.Details.Select(x => new OrderLineModel
-                    {
-                        LineNumber = x.LineNumber,
-                        ProductDescription = x.ItemDescription,
-                        OrderQty = x.OrderQty
-                    }).ToList()
-                };
+                var orderModel = _mappingService.Map<OrderEntity, OrderModel>(order);
 
                 orders.Orders.Add(orderModel);
             }
