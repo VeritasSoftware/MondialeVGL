@@ -11,6 +11,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MondialeVGL.OrderProcessor.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MondialeVGL.OrderProcessor.Services", "MondialeVGL.OrderProcessor.Services\MondialeVGL.OrderProcessor.Services.csproj", "{68705D13-3C89-4E80-8801-B9161564167B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 - Repository", "00 - Repository", "{6320439B-E2B2-4B20-828A-04FC24B92E9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 - Services", "10 - Services", "{F4D6241F-94EC-4AF2-ABCA-BCC24DB4DD57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "90 - Tests", "90 - Tests", "{DA8C37F9-39A6-4ECC-BCC1-A9AE3D83DD1D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "20 - Application", "20 - Application", "{B9E40B3F-096F-4583-8703-A1BB45696510}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD226680-D7CC-47CD-80BC-6D356A999A16}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\Application.JPG = Docs\Application.JPG
+		README.md = README.md
+		Docs\RepositoryLayer.jpg = Docs\RepositoryLayer.jpg
+		Docs\ServiceLayer.jpg = Docs\ServiceLayer.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +52,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8D57D112-3647-41E4-9940-BD9D7C1F36EA} = {B9E40B3F-096F-4583-8703-A1BB45696510}
+		{94066BC2-0D5F-4B6B-8650-05C88E0262B1} = {6320439B-E2B2-4B20-828A-04FC24B92E9E}
+		{CC1F8C6F-E531-415C-BA63-D87C99B71A0C} = {DA8C37F9-39A6-4ECC-BCC1-A9AE3D83DD1D}
+		{68705D13-3C89-4E80-8801-B9161564167B} = {F4D6241F-94EC-4AF2-ABCA-BCC24DB4DD57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {735431D2-3FA2-42B3-8E4D-0308831889D9}

@@ -11,8 +11,6 @@ namespace MondialeVGL.OrderProcessor
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
             //Read appsettings
             var builder = new ConfigurationBuilder()
                             .AddJsonFile($"appsettings.json", true, true);
