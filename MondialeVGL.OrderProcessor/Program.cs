@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MondialeVGL.OrderProcessor.Repository;
+using MondialeVGL.OrderProcessor.Services;
 using System;
 using System.Threading.Tasks;
 
@@ -22,15 +23,22 @@ namespace MondialeVGL.OrderProcessor
             var services = new ServiceCollection();
 
             services.AddScoped<IOrderRepository>(sp => new OrderRepository(config["OrdersFilePath"]));
+            services.AddScoped<IOrderService, OrderService>();
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var repository = serviceProvider.GetRequiredService<IOrderRepository>();
-
-            await foreach (var order in repository.GetOrdersAsync())
+            try
             {
-                Console.WriteLine($"PO No: {order.Header.PurchaseOrderNumber}, No of Details: {order.Details.Count}");
+                var orderService = serviceProvider.GetRequiredService<IOrderService>();
+
+                var ordersXml = await orderService.GetOrdersXmlAsync();
+
+                Console.WriteLine(ordersXml);
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }            
 
             Console.ReadLine();
         }

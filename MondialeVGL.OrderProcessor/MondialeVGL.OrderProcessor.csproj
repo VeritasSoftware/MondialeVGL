@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MondialeVGL.OrderProcessor.Repository\MondialeVGL.OrderProcessor.Repository.csproj" />
+    <ProjectReference Include="..\MondialeVGL.OrderProcessor.Services\MondialeVGL.OrderProcessor.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

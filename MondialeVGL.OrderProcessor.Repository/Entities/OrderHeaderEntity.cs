@@ -17,6 +17,7 @@ namespace MondialeVGL.OrderProcessor.Repository.Entities
         public string Destination { get; set; }
 
         [Index(5)]
-        public string CargoReadyDate { get; set; }
+        [Format("d/MM/yy")]
+        public DateTime CargoReadyDate { get; set; }
     }
 }
