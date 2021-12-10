@@ -29,7 +29,7 @@ namespace MondialeVGL.OrderProcessor
 
             await foreach (var order in repository.GetOrdersAsync())
             {
-                Console.WriteLine($"PO No: {order.Header.PurchaseOrderNumber} No of Details: {order.Details.Count}");
+                Console.WriteLine($"PO No: {order.Header.PurchaseOrderNumber}, No of Details: {order.Details.Count}");
             }
 
             Console.ReadLine();

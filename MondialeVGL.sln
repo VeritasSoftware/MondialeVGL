@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MondialeVGL.OrderProcessor"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MondialeVGL.OrderProcessor.Repository", "MondialeVGL.OrderProcessor.Repository\MondialeVGL.OrderProcessor.Repository.csproj", "{94066BC2-0D5F-4B6B-8650-05C88E0262B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MondialeVGL.OrderProcessor.UnitTests", "MondialeVGL.OrderProcessor.UnitTests\MondialeVGL.OrderProcessor.UnitTests.csproj", "{CC1F8C6F-E531-415C-BA63-D87C99B71A0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{94066BC2-0D5F-4B6B-8650-05C88E0262B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94066BC2-0D5F-4B6B-8650-05C88E0262B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94066BC2-0D5F-4B6B-8650-05C88E0262B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC1F8C6F-E531-415C-BA63-D87C99B71A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC1F8C6F-E531-415C-BA63-D87C99B71A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC1F8C6F-E531-415C-BA63-D87C99B71A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC1F8C6F-E531-415C-BA63-D87C99B71A0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
