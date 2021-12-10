@@ -12,6 +12,8 @@ namespace MondialeVGL.OrderProcessor.Services
         {
             var config = new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<OrderCollectionEntity, OrderCollectionModel>();
+
                 cfg.CreateMap<OrderEntity, OrderModel>()
                     .ForMember(d => d.PurchaseOrderNumber, src => src.MapFrom(s => s.Header.PurchaseOrderNumber))
                     .ForMember(d => d.Supplier, src => src.MapFrom(s => s.Header.Supplier))

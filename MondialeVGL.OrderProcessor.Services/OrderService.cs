@@ -1,8 +1,6 @@
 ﻿using MondialeVGL.OrderProcessor.Repository;
 using MondialeVGL.OrderProcessor.Repository.Entities;
 using MondialeVGL.OrderProcessor.Services.Models;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MondialeVGL.OrderProcessor.Services
@@ -20,29 +18,11 @@ namespace MondialeVGL.OrderProcessor.Services
 
         public async Task<string> GetOrdersXmlAsync()
         {
-            var orders = new OrderCollectionModel
-            {
-                Orders = new List<OrderModel>()
-            };
+            var orderEntities = await _orderRepository.GetOrdersAsync();
 
-            await foreach (var order in _orderRepository.GetOrdersAsync())
-            {
-                var orderModel = _mappingService.Map<OrderEntity, OrderModel>(order);
+            var orderModels = _mappingService.Map<OrderCollectionEntity, OrderCollectionModel>(orderEntities);
 
-                orders.Orders.Add(orderModel);
-            }
-
-            return orders.Serialize();
-        }
-
-        private static string GetDestination(string supplier)
-        {
-            return supplier switch
-            {
-                "SHANGHAI FURNITURE COMPANY" => "Melbourne AUMEL",
-                "YANTIAN INDUSTRIAL PRODUCTS" => "Sydney AUSYD",
-                _ => null
-            };
+            return orderModels.Serialize();
         }
     }
 }

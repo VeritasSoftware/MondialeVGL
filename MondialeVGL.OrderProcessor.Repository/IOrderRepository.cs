@@ -1,10 +1,10 @@
 ﻿using MondialeVGL.OrderProcessor.Repository.Entities;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MondialeVGL.OrderProcessor.Repository
 {
     public interface IOrderRepository
     {
-        IAsyncEnumerable<OrderEntity> GetOrdersAsync();
+        Task<OrderCollectionEntity> GetOrdersAsync();
     }
 }

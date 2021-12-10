@@ -33,17 +33,12 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         {
             var repository = _serviceProvider.GetRequiredService<IOrderRepository>();
 
-            var pos = new List<string>();
+            var orders = await repository.GetOrdersAsync();
 
-            await foreach (var order in repository.GetOrdersAsync())
-            {
-                pos.Add($"PO No: {order.Header.PurchaseOrderNumber}, No of Details: {order.Details.Count}");
-            }
-
-            Assert.Equal("PO No: PO2008-01, No of Details: 2", pos.ElementAt(0));
-            Assert.Equal("PO No: PO2008-02, No of Details: 2", pos.ElementAt(1));
-            Assert.Equal("PO No: PO2008-03, No of Details: 1", pos.ElementAt(2));
-            Assert.Equal("PO No: PO2008-04, No of Details: 3", pos.ElementAt(3));
+            Assert.Equal("PO No: PO2008-01, No of Details: 2", $"PO No: {orders.Orders.ElementAt(0).Header.PurchaseOrderNumber}, No of Details: {orders.Orders.ElementAt(0).Details.Count}");
+            Assert.Equal("PO No: PO2008-02, No of Details: 2", $"PO No: {orders.Orders.ElementAt(1).Header.PurchaseOrderNumber}, No of Details: {orders.Orders.ElementAt(1).Details.Count}");
+            Assert.Equal("PO No: PO2008-03, No of Details: 1", $"PO No: {orders.Orders.ElementAt(2).Header.PurchaseOrderNumber}, No of Details: {orders.Orders.ElementAt(2).Details.Count}"); ;
+            Assert.Equal("PO No: PO2008-04, No of Details: 3", $"PO No: {orders.Orders.ElementAt(3).Header.PurchaseOrderNumber}, No of Details: {orders.Orders.ElementAt(3).Details.Count}");
         }
     }
 }

@@ -17,8 +17,13 @@ namespace MondialeVGL.OrderProcessor.Repository
             _orderFilePath = orderFilePath;
         }
 
-        public async IAsyncEnumerable<OrderEntity> GetOrdersAsync()
+        public async Task<OrderCollectionEntity> GetOrdersAsync()
         {
+            var orders = new OrderCollectionEntity
+            {
+                Orders = new List<OrderEntity>()
+            };
+
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = false,
@@ -38,7 +43,7 @@ namespace MondialeVGL.OrderProcessor.Repository
                     {
                         if (currentOrder != null)
                         {
-                            yield return currentOrder;
+                            orders.Orders.Add(currentOrder);
                         }
 
                         currentOrder = new OrderEntity();
@@ -58,11 +63,11 @@ namespace MondialeVGL.OrderProcessor.Repository
 
                 if (currentOrder != null)
                 {
-                    yield return currentOrder;
+                    orders.Orders.Add(currentOrder);
                 }
             }
 
-            await Task.CompletedTask;
+            return orders;
         }
     }
 }
