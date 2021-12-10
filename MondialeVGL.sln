@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MondialeVGL.OrderProcessor", "MondialeVGL.OrderProcessor\MondialeVGL.OrderProcessor.csproj", "{8D57D112-3647-41E4-9940-BD9D7C1F36EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MondialeVGL.OrderProcessor.Repository", "MondialeVGL.OrderProcessor.Repository\MondialeVGL.OrderProcessor.Repository.csproj", "{94066BC2-0D5F-4B6B-8650-05C88E0262B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D57D112-3647-41E4-9940-BD9D7C1F36EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D57D112-3647-41E4-9940-BD9D7C1F36EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D57D112-3647-41E4-9940-BD9D7C1F36EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D57D112-3647-41E4-9940-BD9D7C1F36EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94066BC2-0D5F-4B6B-8650-05C88E0262B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94066BC2-0D5F-4B6B-8650-05C88E0262B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94066BC2-0D5F-4B6B-8650-05C88E0262B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94066BC2-0D5F-4B6B-8650-05C88E0262B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {735431D2-3FA2-42B3-8E4D-0308831889D9}
+	EndGlobalSection
+EndGlobal

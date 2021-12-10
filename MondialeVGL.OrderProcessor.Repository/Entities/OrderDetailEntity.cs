@@ -1,0 +1,18 @@
+﻿using CsvHelper.Configuration.Attributes;
+
+namespace MondialeVGL.OrderProcessor.Repository.Entities
+{
+    public class OrderDetailEntity : OrderBaseEntity
+    {
+        public override RecordType Type => RecordType.D;
+
+        [Index(2)]
+        public int LineNumber { get; set; }
+
+        [Index(3)]
+        public string ItemDescription { get; set; }
+
+        [Index(4)]
+        public int OrderQty { get; set; }
+    }
+}
