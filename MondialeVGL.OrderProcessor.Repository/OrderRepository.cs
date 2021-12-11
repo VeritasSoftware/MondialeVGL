@@ -27,7 +27,7 @@ namespace MondialeVGL.OrderProcessor.Repository
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = false
-            };            
+            };
 
             using (var reader = new StreamReader(_orderFilePath))
             using (var csv = new CsvReader(reader, config))
@@ -39,16 +39,9 @@ namespace MondialeVGL.OrderProcessor.Repository
                 {
                     try
                     {
-                        var strRecordType = csv.GetField(0);
+                        var recordType = csv.GetRecordType();
 
-                        if (string.IsNullOrEmpty(strRecordType) ||
-                            !(string.Compare(strRecordType, RecordType.H.ToString(), true) == 0 ||
-                            string.Compare(strRecordType, RecordType.D.ToString(), true) == 0))
-                        {
-                            throw new ApplicationException($"{strRecordType} is an invalid record type. Valid values [H|D].");
-                        }
-
-                        isNewOrder = string.Compare(strRecordType, RecordType.H.ToString(), true) == 0;
+                        isNewOrder = recordType == RecordType.H;
                     }
                     catch(Exception ex)
                     {
