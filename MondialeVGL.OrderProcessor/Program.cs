@@ -30,9 +30,12 @@ namespace MondialeVGL.OrderProcessor
                     var ordersResult = await orderService.GetOrdersXmlAsync();
 
                     //Print Errors
-                    foreach(var error in ordersResult.Errors)
+                    if (ordersResult.HasErrors)
                     {
-                        Console.WriteLine($"Error: {error.InnerException?.Message ?? error.Message}\n");
+                        foreach (var error in ordersResult.Errors)
+                        {
+                            Console.WriteLine($"Error: {error.InnerException?.Message ?? error.Message}\n");
+                        }
                     }
 
                     //Print Orders Xml

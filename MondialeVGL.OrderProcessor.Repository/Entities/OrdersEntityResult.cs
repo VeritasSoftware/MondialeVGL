@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MondialeVGL.OrderProcessor.Repository.Entities
 {
     public class OrdersEntityResult
     {
         public OrderEntityCollection Orders { get; set; }
-
+        public bool HasErrors => Errors.Any();
         public ICollection<Exception> Errors { get; set; }
 
         public OrdersEntityResult()

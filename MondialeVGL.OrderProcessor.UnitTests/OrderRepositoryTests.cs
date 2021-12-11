@@ -34,17 +34,18 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         {
             var repository = _serviceProvider.GetRequiredService<IOrderRepository>();
 
-            var orders = await repository.GetOrdersAsync();
+            var ordersResult = await repository.GetOrdersAsync();
 
-            Assert.Equal(4, orders.Orders.Orders.Count);
-            Assert.Equal("PO2008-01", orders.Orders.Orders.ElementAt(0).Header.PurchaseOrderNumber);
-            Assert.Equal(2, orders.Orders.Orders.ElementAt(0).Details.Count);
-            Assert.Equal("PO2008-02", orders.Orders.Orders.ElementAt(1).Header.PurchaseOrderNumber);
-            Assert.Equal(2, orders.Orders.Orders.ElementAt(1).Details.Count);
-            Assert.Equal("PO2008-03", orders.Orders.Orders.ElementAt(2).Header.PurchaseOrderNumber);
-            Assert.Equal(1, orders.Orders.Orders.ElementAt(2).Details.Count);
-            Assert.Equal("PO2008-04", orders.Orders.Orders.ElementAt(3).Header.PurchaseOrderNumber);
-            Assert.Equal(3, orders.Orders.Orders.ElementAt(3).Details.Count);
+            Assert.Equal(4, ordersResult.Orders.Orders.Count);
+            Assert.False(ordersResult.HasErrors);
+            Assert.Equal("PO2008-01", ordersResult.Orders.Orders.ElementAt(0).Header.PurchaseOrderNumber);
+            Assert.Equal(2, ordersResult.Orders.Orders.ElementAt(0).Details.Count);
+            Assert.Equal("PO2008-02", ordersResult.Orders.Orders.ElementAt(1).Header.PurchaseOrderNumber);
+            Assert.Equal(2, ordersResult.Orders.Orders.ElementAt(1).Details.Count);
+            Assert.Equal("PO2008-03", ordersResult.Orders.Orders.ElementAt(2).Header.PurchaseOrderNumber);
+            Assert.Equal(1, ordersResult.Orders.Orders.ElementAt(2).Details.Count);
+            Assert.Equal("PO2008-04", ordersResult.Orders.Orders.ElementAt(3).Header.PurchaseOrderNumber);
+            Assert.Equal(3, ordersResult.Orders.Orders.ElementAt(3).Details.Count);
         }
 
         [Fact]
@@ -55,6 +56,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
             var ordersResult = await repository.GetOrdersAsync();
 
             Assert.Equal(2, ordersResult.Orders.Orders.Count);
+            Assert.True(ordersResult.HasErrors);
             Assert.Equal(3, ordersResult.Errors.Count);
             Assert.Equal("String '*/05/14' was not recognized as a valid DateTime.", ordersResult.Errors.ElementAt(0).InnerException.Message);
             Assert.Equal("*H is an invalid record type. Valid values [H|D].", ordersResult.Errors.ElementAt(1).Message);
@@ -81,6 +83,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
             var ordersResult = await repository.GetOrdersAsync();
 
             Assert.Equal(2, ordersResult.Orders.Orders.Count);
+            Assert.True(ordersResult.HasErrors);
             Assert.Equal(3, errors.Count);
             Assert.Equal("String '*/05/14' was not recognized as a valid DateTime.", errors.ElementAt(0).InnerException.Message);
             Assert.Equal("*H is an invalid record type. Valid values [H|D].", errors.ElementAt(1).Message);
