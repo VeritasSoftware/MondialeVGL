@@ -6,9 +6,9 @@ using System.Xml.Serialization;
 
 namespace MondialeVGL.OrderProcessor.Services
 {
-    public static class Extensions
+    internal static class Extensions
     {
-        internal static string Serialize<T>(this T value)
+        public static string Serialize<T>(this T value)
             where T:class
         {
             if (value == null)
