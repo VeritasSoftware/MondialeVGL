@@ -18,10 +18,10 @@ namespace MondialeVGL.OrderProcessor.Services
             _orderRepository = orderRepository;
             _mappingService = mappingService;
 
-            OrderRepository.OnReadError += OrderRepository_OnReadingExceptionOccurred;
+            OrderRepository.OnReadError += OrderRepository_OnReadError;
         }
 
-        private async Task OrderRepository_OnReadingExceptionOccurred(Exception arg)
+        private async Task OrderRepository_OnReadError(Exception arg)
         {
             OnReadError?.Invoke(arg);
 
@@ -39,7 +39,7 @@ namespace MondialeVGL.OrderProcessor.Services
 
         public async ValueTask DisposeAsync()
         {
-            OrderRepository.OnReadError -= OrderRepository_OnReadingExceptionOccurred;
+            OrderRepository.OnReadError -= OrderRepository_OnReadError;
 
             await Task.CompletedTask;
         }
