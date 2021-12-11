@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MondialeVGL.OrderProcessor.Repository;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -57,6 +59,32 @@ namespace MondialeVGL.OrderProcessor.UnitTests
             Assert.Equal("String '*/05/14' was not recognized as a valid DateTime.", ordersResult.Errors.ElementAt(0).InnerException.Message);
             Assert.Equal("*H is an invalid record type. Valid values [H|D].", ordersResult.Errors.ElementAt(1).Message);
             Assert.Contains(@"D,PO2008-04,1,GREEN BEDS,*&,", ordersResult.Errors.ElementAt(2).Message);
+        }
+
+        [Fact]
+        public async Task GetOrdersAsync_OnReadError_BadInputData_Failure()
+        {
+            var errors = new List<Exception>();
+            
+            var repository = new OrderRepository(@".\Interface Data - Bad Data.csv");            
+
+            repository.OnReadError += async error =>
+            {
+                lock(this)
+                {
+                    errors.Add(error);
+                }
+
+                await Task.CompletedTask;
+            };
+
+            var ordersResult = await repository.GetOrdersAsync();
+
+            Assert.Equal(2, ordersResult.Orders.Orders.Count);
+            Assert.Equal(3, errors.Count);
+            Assert.Equal("String '*/05/14' was not recognized as a valid DateTime.", errors.ElementAt(0).InnerException.Message);
+            Assert.Equal("*H is an invalid record type. Valid values [H|D].", errors.ElementAt(1).Message);
+            Assert.Contains(@"D,PO2008-04,1,GREEN BEDS,*&,", errors.ElementAt(2).Message);
         }
     }
 }
