@@ -19,7 +19,7 @@ namespace MondialeVGL.OrderProcessor.Services
                     .ForMember(d => d.Supplier, src => src.MapFrom(s => GetSupplierCode(s.Header.Supplier)))
                     .ForMember(d => d.Origin, src => src.MapFrom(s => s.Header.Origin))
                     .ForMember(d => d.Destination, src => src.MapFrom(s => string.IsNullOrEmpty(s.Header.Destination) ? 
-                                                                            GetDestinationBySupplierCode(s.Header.Supplier) :
+                                                                            GetDestination(s.Header.Supplier) :
                                                                             s.Header.Destination))
                     .ForMember(d => d.CargoReady, src => src.MapFrom(s => s.Header.CargoReadyDate.ToString("yyyy-MM-dd")))
                     .ForMember(d => d.Lines, src => src.MapFrom(s => s.Details));
@@ -50,7 +50,7 @@ namespace MondialeVGL.OrderProcessor.Services
             };
         }
 
-        private static string GetDestinationBySupplierCode(string supplier)
+        private static string GetDestination(string supplier)
         {
             return supplier switch
             {
