@@ -9,23 +9,20 @@ using System.Threading.Tasks;
 
 namespace MondialeVGL.OrderProcessor.Repository
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository, IAsyncDisposable
     {
         private readonly string _orderFilePath;
 
-        public static event Func<Exception, Task> OnReadError;
+        public event Func<Exception, Task> OnReadError;
 
         public OrderRepository(string orderFilePath)
         {
             _orderFilePath = orderFilePath;
         }
 
-        public async Task<OrderCollectionEntity> GetOrdersAsync()
+        public async Task<OrdersEntityResult> GetOrdersAsync()
         {
-            var orders = new OrderCollectionEntity
-            {
-                Orders = new List<OrderEntity>()
-            };            
+            var ordersResult = new OrdersEntityResult();
 
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -55,6 +52,7 @@ namespace MondialeVGL.OrderProcessor.Repository
                     }
                     catch(Exception ex)
                     {
+                        ordersResult.Errors.Add(ex);
                         OnReadError?.Invoke(ex);
                         isNewOrder = false;
                         currentOrder = null;
@@ -65,7 +63,7 @@ namespace MondialeVGL.OrderProcessor.Repository
                     {
                         if (currentOrder != null)
                         {
-                            orders.Orders.Add(currentOrder);
+                            ordersResult.Orders.Orders.Add(currentOrder);
                         }
 
                         currentOrder = new OrderEntity();
@@ -79,6 +77,7 @@ namespace MondialeVGL.OrderProcessor.Repository
                         }
                         catch(Exception ex)
                         {
+                            ordersResult.Errors.Add(ex);
                             OnReadError?.Invoke(ex);
                             currentOrder = null;
                             continue;
@@ -94,6 +93,7 @@ namespace MondialeVGL.OrderProcessor.Repository
                         }
                         catch (Exception ex)
                         {
+                            ordersResult.Errors.Add(ex);
                             OnReadError?.Invoke(ex);
                             continue;
                         }                      
@@ -102,11 +102,18 @@ namespace MondialeVGL.OrderProcessor.Repository
 
                 if (currentOrder != null)
                 {
-                    orders.Orders.Add(currentOrder);
+                    ordersResult.Orders.Orders.Add(currentOrder);
                 }
             }
 
-            return orders;
+            return ordersResult;
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            OnReadError = null;
+
+            await Task.CompletedTask;
         }
     }
 }

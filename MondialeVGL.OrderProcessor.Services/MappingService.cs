@@ -12,13 +12,15 @@ namespace MondialeVGL.OrderProcessor.Services
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<OrderCollectionEntity, OrderCollectionModel>();
+                cfg.CreateMap<OrderEntityCollection, OrderModelCollection>();
 
                 cfg.CreateMap<OrderEntity, OrderModel>()
                     .ForMember(d => d.PurchaseOrderNumber, src => src.MapFrom(s => s.Header.PurchaseOrderNumber))
-                    .ForMember(d => d.Supplier, src => src.MapFrom(s => s.Header.Supplier))
+                    .ForMember(d => d.Supplier, src => src.MapFrom(s => GetSupplierCode(s.Header.Supplier)))
                     .ForMember(d => d.Origin, src => src.MapFrom(s => s.Header.Origin))
-                    .ForMember(d => d.Destination, src => src.MapFrom(s => string.IsNullOrEmpty(s.Header.Destination) ? GetDestination(s.Header.Supplier) : s.Header.Destination))
+                    .ForMember(d => d.Destination, src => src.MapFrom(s => string.IsNullOrEmpty(s.Header.Destination) ? 
+                                                                            GetDestinationBySupplierCode(s.Header.Supplier) :
+                                                                            s.Header.Destination))
                     .ForMember(d => d.CargoReady, src => src.MapFrom(s => s.Header.CargoReadyDate.ToString("yyyy-MM-dd")))
                     .ForMember(d => d.Lines, src => src.MapFrom(s => s.Details));
 
@@ -38,12 +40,22 @@ namespace MondialeVGL.OrderProcessor.Services
             return _mapper.Map<TDestination>(source);
         }
 
-        private static string GetDestination(string supplier)
+        private static string GetSupplierCode(string supplier)
         {
             return supplier switch
             {
-                "SHANGHAI FURNITURE COMPANY" => "Melbourne AUMEL",
-                "YANTIAN INDUSTRIAL PRODUCTS" => "Sydney AUSYD",
+                "SHANGHAI FURNITURE COMPANY" => "SFC01",
+                "YANTIAN INDUSTRIAL PRODUCTS" => "YIP-1",
+                _ => null
+            };
+        }
+
+        private static string GetDestinationBySupplierCode(string supplier)
+        {
+            return supplier switch
+            {
+                "SHANGHAI FURNITURE COMPANY" => "AUMEL",
+                "YANTIAN INDUSTRIAL PRODUCTS" => "AUSYD",
                 _ => null
             };
         }

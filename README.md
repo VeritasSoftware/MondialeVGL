@@ -19,7 +19,7 @@ The solution is a .Net Core Console app.
 There are various Entities in this layer.
 These entities model the input data in the csv file.
 
-The **OrderRepository** reads the csv file using CsvHelper.
+The **OrderRepository** reads the csv file using **CsvHelper**.
 
 ![Repository Layer](Docs/RepositoryLayer.jpg)
 

@@ -9,7 +9,7 @@ namespace MondialeVGL.OrderProcessor.Services.Models
 {
     [Serializable]
     [XmlType(TypeName = "PurchaseOrders")]
-    public class OrderCollectionModel
+    public class OrderModelCollection
     {
         [XmlArray("PurchaseOrder")]
         [XmlArrayItem("PurchaseOrder")]

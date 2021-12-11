@@ -11,14 +11,14 @@ namespace MondialeVGL.OrderProcessor.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IMappingService _mappingService;
 
-        public static event Func<Exception, Task> OnReadError;
+        public event Func<Exception, Task> OnReadError;
 
         public OrderService(IOrderRepository orderRepository, IMappingService mappingService)
         {
             _orderRepository = orderRepository;
             _mappingService = mappingService;
 
-            OrderRepository.OnReadError += OrderRepository_OnReadError;
+            _orderRepository.OnReadError += OrderRepository_OnReadError;
         }
 
         private async Task OrderRepository_OnReadError(Exception arg)
@@ -28,18 +28,26 @@ namespace MondialeVGL.OrderProcessor.Services
             await Task.CompletedTask;
         }
 
-        public async Task<string> GetOrdersXmlAsync()
+        public async Task<OrdersResult> GetOrdersXmlAsync()
         {
-            var orderEntities = await _orderRepository.GetOrdersAsync();
+            var ordersEntityResult = await _orderRepository.GetOrdersAsync();
 
-            var orderModels = _mappingService.Map<OrderCollectionEntity, OrderCollectionModel>(orderEntities);
+            var orderModels = _mappingService.Map<OrderEntityCollection, OrderModelCollection>(ordersEntityResult.Orders);
 
-            return orderModels.Serialize();
+            var ordersXml = orderModels.Serialize();
+
+            var ordersResult = new OrdersResult
+            {
+                OrdersXml = ordersXml,
+                Errors = ordersEntityResult.Errors
+            };
+
+            return ordersResult;
         }
 
         public async ValueTask DisposeAsync()
         {
-            OrderRepository.OnReadError -= OrderRepository_OnReadError;
+            _orderRepository.OnReadError -= OrderRepository_OnReadError;
 
             await Task.CompletedTask;
         }

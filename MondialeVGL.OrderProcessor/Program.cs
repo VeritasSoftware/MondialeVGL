@@ -25,19 +25,22 @@ namespace MondialeVGL.OrderProcessor
 
                 try
                 {
-                    OrderService.OnReadError += OrderService_OnReadError;
-
                     var orderService = serviceProvider.GetRequiredService<IOrderService>();
 
                     //Process orders
-                    var ordersXml = await orderService.GetOrdersXmlAsync();
+                    var ordersResult = await orderService.GetOrdersXmlAsync();
 
-                    Console.WriteLine(ordersXml);
+                    //Print Errors
+                    foreach(var error in ordersResult.Errors)
+                    {
+                        Console.WriteLine($"Error: {error.InnerException?.Message ?? error.Message}\n");
+                    }
+
+                    //Print Orders Xml
+                    Console.WriteLine(ordersResult.OrdersXml);
                 }
                 catch (Exception ex)
                 {
-                    OrderService.OnReadError -= OrderService_OnReadError;
-
                     Console.WriteLine(ex.Message);
                 }
 
@@ -49,13 +52,6 @@ namespace MondialeVGL.OrderProcessor
 
                 Console.ReadLine();
             }
-        }
-
-        private static async Task OrderService_OnReadError(Exception arg)
-        {
-            Console.WriteLine($"Error: {arg.InnerException?.Message??arg.Message}\n");
-
-            await Task.CompletedTask;
         }
     }
 }

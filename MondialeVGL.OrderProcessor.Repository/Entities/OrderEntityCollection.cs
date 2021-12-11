@@ -2,7 +2,7 @@
 
 namespace MondialeVGL.OrderProcessor.Repository.Entities
 {
-    public class OrderCollectionEntity
+    public class OrderEntityCollection
     {
         public ICollection<OrderEntity> Orders { get; set; }
     }
