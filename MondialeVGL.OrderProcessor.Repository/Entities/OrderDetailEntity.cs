@@ -3,9 +3,7 @@
 namespace MondialeVGL.OrderProcessor.Repository.Entities
 {
     public class OrderDetailEntity : OrderBaseEntity
-    {
-        public override RecordType Type => RecordType.D;
-
+    {        
         [Index(2)]
         public int LineNumber { get; set; }
 

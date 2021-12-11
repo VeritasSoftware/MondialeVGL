@@ -4,9 +4,7 @@ using System;
 namespace MondialeVGL.OrderProcessor.Repository.Entities
 {
     public class OrderHeaderEntity : OrderBaseEntity
-    {
-        public override RecordType Type => RecordType.H;
-        
+    {        
         [Index(2)]
         public string Supplier { get; set; }
 

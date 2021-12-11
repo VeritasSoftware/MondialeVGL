@@ -11,19 +11,19 @@ namespace MondialeVGL.OrderProcessor.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IMappingService _mappingService;
 
-        public static event Func<Exception, Task> OnReadingExceptionOccurred;
+        public static event Func<Exception, Task> OnReadError;
 
         public OrderService(IOrderRepository orderRepository, IMappingService mappingService)
         {
             _orderRepository = orderRepository;
             _mappingService = mappingService;
 
-            OrderRepository.OnReadingExceptionOccurred += OrderRepository_OnReadingExceptionOccurred;
+            OrderRepository.OnReadError += OrderRepository_OnReadingExceptionOccurred;
         }
 
         private async Task OrderRepository_OnReadingExceptionOccurred(Exception arg)
         {
-            OnReadingExceptionOccurred?.Invoke(arg);
+            OnReadError?.Invoke(arg);
 
             await Task.CompletedTask;
         }
@@ -39,7 +39,7 @@ namespace MondialeVGL.OrderProcessor.Services
 
         public async ValueTask DisposeAsync()
         {
-            OrderRepository.OnReadingExceptionOccurred -= OrderRepository_OnReadingExceptionOccurred;
+            OrderRepository.OnReadError -= OrderRepository_OnReadingExceptionOccurred;
 
             await Task.CompletedTask;
         }

@@ -13,7 +13,7 @@ namespace MondialeVGL.OrderProcessor.Repository
     {
         private readonly string _orderFilePath;
 
-        public static event Func<Exception, Task> OnReadingExceptionOccurred;
+        public static event Func<Exception, Task> OnReadError;
 
         public OrderRepository(string orderFilePath)
         {
@@ -25,12 +25,12 @@ namespace MondialeVGL.OrderProcessor.Repository
             var orders = new OrderCollectionEntity
             {
                 Orders = new List<OrderEntity>()
-            };
+            };            
 
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = false
-            };
+            };            
 
             using (var reader = new StreamReader(_orderFilePath))
             using (var csv = new CsvReader(reader, config))
@@ -42,11 +42,20 @@ namespace MondialeVGL.OrderProcessor.Repository
                 {
                     try
                     {
-                        isNewOrder = string.Compare(csv.GetField(0), RecordType.H.ToString(), true) == 0;
+                        var strRecordType = csv.GetField(0);
+
+                        if (string.IsNullOrEmpty(strRecordType) ||
+                            !(string.Compare(strRecordType, RecordType.H.ToString(), true) == 0 ||
+                            string.Compare(strRecordType, RecordType.D.ToString(), true) == 0))
+                        {
+                            throw new ApplicationException($"{strRecordType} is an invalid record type. Valid values [H|D].");
+                        }
+
+                        isNewOrder = string.Compare(strRecordType, RecordType.H.ToString(), true) == 0;
                     }
                     catch(Exception ex)
                     {
-                        OnReadingExceptionOccurred?.Invoke(ex);
+                        OnReadError?.Invoke(ex);
                         isNewOrder = false;
                         currentOrder = null;
                         continue;
@@ -70,7 +79,7 @@ namespace MondialeVGL.OrderProcessor.Repository
                         }
                         catch(Exception ex)
                         {
-                            OnReadingExceptionOccurred?.Invoke(ex);
+                            OnReadError?.Invoke(ex);
                             currentOrder = null;
                             continue;
                         }
@@ -85,7 +94,7 @@ namespace MondialeVGL.OrderProcessor.Repository
                         }
                         catch (Exception ex)
                         {
-                            OnReadingExceptionOccurred?.Invoke(ex);
+                            OnReadError?.Invoke(ex);
                             continue;
                         }                      
                     }

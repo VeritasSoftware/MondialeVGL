@@ -4,7 +4,8 @@ namespace MondialeVGL.OrderProcessor.Repository.Entities
 {
     public abstract class OrderBaseEntity
     {
-        public virtual RecordType Type { get; }
+        [Index(0)]
+        public virtual string RecordType { get; set; }
 
         [Index(1)]
         public string PurchaseOrderNumber { get; set; }
