@@ -8,7 +8,7 @@ namespace MondialeVGL.OrderProcessor.Services
 {
     public static class Extensions
     {
-        public static string Serialize<T>(this T value)
+        internal static string Serialize<T>(this T value)
             where T:class
         {
             if (value == null)

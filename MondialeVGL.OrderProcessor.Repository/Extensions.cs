@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace MondialeVGL.OrderProcessor.Repository
 {
-    public static class Extensions
+    internal static class Extensions
     {
         public static RecordType GetRecordType(this CsvReader csvReader)
         {
