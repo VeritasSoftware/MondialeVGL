@@ -51,7 +51,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         [Fact]
         public async Task GetOrdersAsync_BadInputData_Failure()
         {
-            var repository = new OrderRepository(@".\Interface Data - Bad Data.csv");
+            IOrderRepository repository = new OrderRepository(@".\Interface Data - Bad Data.csv");
 
             var ordersResult = await repository.GetOrdersAsync();
 
@@ -68,7 +68,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         {
             var errors = new List<Exception>();
             
-            var repository = new OrderRepository(@".\Interface Data - Bad Data.csv");            
+            IOrderRepository repository = new OrderRepository(@".\Interface Data - Bad Data.csv");            
 
             repository.OnReadError += async error =>
             {
