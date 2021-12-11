@@ -84,6 +84,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
 
             Assert.Equal(2, ordersResult.Orders.Orders.Count);
             Assert.True(ordersResult.HasErrors);
+            Assert.Equal(3, ordersResult.Errors.Count);
             Assert.Equal(3, errors.Count);
             Assert.Equal("String '*/05/14' was not recognized as a valid DateTime.", errors.ElementAt(0).InnerException.Message);
             Assert.Equal("*H is an invalid record type. Valid values [H|D].", errors.ElementAt(1).Message);
