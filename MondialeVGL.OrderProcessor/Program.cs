@@ -11,44 +11,53 @@ namespace MondialeVGL.OrderProcessor
     {
         static async Task Main(string[] args)
         {
-            //Read appsettings
-            var builder = new ConfigurationBuilder()
-                            .AddJsonFile($"appsettings.json", true, true);
-
-            var config = builder.Build();
-
-            //Build DI container
-            var services = new ServiceCollection();
-
-            services.AddScoped<IOrderRepository>(sp => new OrderRepository(config["OrdersFilePath"]));
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddSingleton<IMappingService, MappingService>();
-
-            var serviceProvider = services.BuildServiceProvider();
-
             try
             {
-                OrderService.OnReadError += OrderService_OnReadError;
+                //Read appsettings
+                var builder = new ConfigurationBuilder()
+                                .AddJsonFile($"appsettings.json", true, true);
 
-                var orderService = serviceProvider.GetRequiredService<IOrderService>();
+                var config = builder.Build();
 
-                //Process orders
-                var ordersXml = await orderService.GetOrdersXmlAsync();
+                //Build DI container
+                var services = new ServiceCollection();
 
-                Console.WriteLine(ordersXml);
+                services.AddScoped<IOrderRepository>(sp => new OrderRepository(config["OrdersFilePath"]));
+                services.AddScoped<IOrderService, OrderService>();
+                services.AddSingleton<IMappingService, MappingService>();
 
-                await serviceProvider.DisposeAsync();
+                var serviceProvider = services.BuildServiceProvider();
+
+                try
+                {
+                    OrderService.OnReadError += OrderService_OnReadError;
+
+                    var orderService = serviceProvider.GetRequiredService<IOrderService>();
+
+                    //Process orders
+                    var ordersXml = await orderService.GetOrdersXmlAsync();
+
+                    Console.WriteLine(ordersXml);
+
+                    await serviceProvider.DisposeAsync();
+                }
+                catch (Exception ex)
+                {
+                    await serviceProvider.DisposeAsync();
+
+                    OrderService.OnReadError -= OrderService_OnReadError;
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                Console.ReadLine();
             }
             catch(Exception ex)
             {
-                await serviceProvider.DisposeAsync();
+                Console.WriteLine(ex.InnerException?.Message ?? ex.Message);
 
-                OrderService.OnReadError -= OrderService_OnReadError;
-
-                Console.WriteLine(ex.Message);
-            }            
-
-            Console.ReadLine();
+                Console.ReadLine();
+            }
         }
 
         private static async Task OrderService_OnReadError(Exception arg)
