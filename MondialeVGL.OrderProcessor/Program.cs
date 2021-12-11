@@ -21,12 +21,7 @@ namespace MondialeVGL.OrderProcessor
 
                 //Build DI container
                 var services = new ServiceCollection();
-
-                services.AddScoped<IOrderRepository>(sp => new OrderRepository(config["OrdersFilePath"]));
-                services.AddScoped<IOrderService, OrderService>();
-                services.AddSingleton<IMappingService, MappingService>();
-
-                var serviceProvider = services.BuildServiceProvider();
+                var serviceProvider = services.AddOrderProcessor(config);
 
                 try
                 {
@@ -38,13 +33,9 @@ namespace MondialeVGL.OrderProcessor
                     var ordersXml = await orderService.GetOrdersXmlAsync();
 
                     Console.WriteLine(ordersXml);
-
-                    await serviceProvider.DisposeAsync();
                 }
                 catch (Exception ex)
                 {
-                    await serviceProvider.DisposeAsync();
-
                     OrderService.OnReadError -= OrderService_OnReadError;
 
                     Console.WriteLine(ex.Message);

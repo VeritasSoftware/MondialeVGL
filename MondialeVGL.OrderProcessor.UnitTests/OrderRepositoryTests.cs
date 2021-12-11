@@ -43,7 +43,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         }
 
         [Fact]
-        public async Task GetOrdersAsync_Failure()
+        public async Task GetOrdersAsync_BadInputData_Failure()
         {
             var exceptions = new List<Exception>();
 
