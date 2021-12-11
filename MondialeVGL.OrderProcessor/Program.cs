@@ -28,18 +28,34 @@ namespace MondialeVGL.OrderProcessor
 
             try
             {
+                OrderService.OnReadingExceptionOccurred += OrderService_OnReadingExceptionOccurred;
+
                 var orderService = serviceProvider.GetRequiredService<IOrderService>();
 
+                //Process orders
                 var ordersXml = await orderService.GetOrdersXmlAsync();
 
                 Console.WriteLine(ordersXml);
+
+                await serviceProvider.DisposeAsync();
             }
             catch(Exception ex)
             {
+                await serviceProvider.DisposeAsync();
+
+                OrderService.OnReadingExceptionOccurred -= OrderService_OnReadingExceptionOccurred;
+
                 Console.WriteLine(ex.Message);
             }            
 
             Console.ReadLine();
+        }
+
+        private static async Task OrderService_OnReadingExceptionOccurred(Exception arg)
+        {
+            Console.WriteLine($"Error: {arg.InnerException?.Message}\n");
+
+            await Task.CompletedTask;
         }
     }
 }

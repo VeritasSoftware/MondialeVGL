@@ -6,7 +6,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEABABAAAAA=</HashCode>
+      <HashCode>AACAAAAAAAAAAIBAAAAAAAAAAAAAAAAAAEABABAAAAA=</HashCode>
       <FileName>OrderService.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -20,7 +20,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MondialeVGL.OrderProcessor.Services.Extensions">
-    <Position X="0.5" Y="4.75" Width="2.5" />
+    <Position X="0.5" Y="5.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Extensions.cs</FileName>

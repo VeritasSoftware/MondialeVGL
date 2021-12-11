@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using MondialeVGL.OrderProcessor.Repository.Entities;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -11,6 +12,8 @@ namespace MondialeVGL.OrderProcessor.Repository
     public class OrderRepository : IOrderRepository
     {
         private readonly string _orderFilePath;
+
+        public static event Func<Exception, Task> OnReadingExceptionOccurred;
 
         public OrderRepository(string orderFilePath)
         {
@@ -26,7 +29,7 @@ namespace MondialeVGL.OrderProcessor.Repository
 
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                HasHeaderRecord = false,
+                HasHeaderRecord = false
             };
 
             using (var reader = new StreamReader(_orderFilePath))
@@ -37,7 +40,17 @@ namespace MondialeVGL.OrderProcessor.Repository
 
                 while (await csv.ReadAsync())
                 {
-                    isNewOrder = string.Compare(csv.GetField(0), RecordType.H.ToString(), true) == 0;
+                    try
+                    {
+                        isNewOrder = string.Compare(csv.GetField(0), RecordType.H.ToString(), true) == 0;
+                    }
+                    catch(Exception ex)
+                    {
+                        OnReadingExceptionOccurred?.Invoke(ex);
+                        isNewOrder = false;
+                        currentOrder = null;
+                        continue;
+                    }
 
                     if (isNewOrder)
                     {
@@ -47,17 +60,34 @@ namespace MondialeVGL.OrderProcessor.Repository
                         }
 
                         currentOrder = new OrderEntity();
-
-                        var orderHeader = csv.GetRecord<OrderHeaderEntity>();
-
-                        currentOrder.Header = orderHeader;
                         currentOrder.Details = new List<OrderDetailEntity>();
-                    }
-                    else
-                    {
-                        var orderDetail = csv.GetRecord<OrderDetailEntity>();
 
-                        currentOrder.Details.Add(orderDetail);
+                        try
+                        {
+                            var orderHeader = csv.GetRecord<OrderHeaderEntity>();
+
+                            currentOrder.Header = orderHeader;                            
+                        }
+                        catch(Exception ex)
+                        {
+                            OnReadingExceptionOccurred?.Invoke(ex);
+                            currentOrder = null;
+                            continue;
+                        }
+                    }
+                    else if (!isNewOrder && currentOrder != null && currentOrder.Header != null)
+                    {
+                        try
+                        {
+                            var orderDetail = csv.GetRecord<OrderDetailEntity>();
+
+                            currentOrder.Details.Add(orderDetail);
+                        }
+                        catch (Exception ex)
+                        {
+                            OnReadingExceptionOccurred?.Invoke(ex);
+                            continue;
+                        }                      
                     }
                 }
 
