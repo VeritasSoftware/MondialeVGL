@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MondialeVGL.OrderProcessor.Repository.Entities
+namespace MondialeVGL.OrderProcessor.Entities
 {
     public class OrderEntity
     {

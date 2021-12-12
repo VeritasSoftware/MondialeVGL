@@ -1,7 +1,7 @@
 ﻿using CsvHelper.Configuration.Attributes;
 using System;
 
-namespace MondialeVGL.OrderProcessor.Repository.Entities
+namespace MondialeVGL.OrderProcessor.Entities
 {
     public class OrderHeaderEntity : OrderBaseEntity
     {        

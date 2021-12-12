@@ -9,6 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MondialeVGL.OrderProcessor.Entities\MondialeVGL.OrderProcessor.Entities.csproj" />
+    <ProjectReference Include="..\MondialeVGL.OrderProcessor.Models\MondialeVGL.OrderProcessor.Models.csproj" />
     <ProjectReference Include="..\MondialeVGL.OrderProcessor.Repository\MondialeVGL.OrderProcessor.Repository.csproj" />
   </ItemGroup>
 

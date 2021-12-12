@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MondialeVGL.OrderProcessor.Repository.Entities;
-using MondialeVGL.OrderProcessor.Services.Models;
+using MondialeVGL.OrderProcessor.Entities;
+using MondialeVGL.OrderProcessor.Models;
 
 namespace MondialeVGL.OrderProcessor.Services
 {

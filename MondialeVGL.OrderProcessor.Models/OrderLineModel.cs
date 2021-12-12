@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace MondialeVGL.OrderProcessor.Services.Models
+namespace MondialeVGL.OrderProcessor.Models
 {
     [Serializable]
     [XmlType(TypeName = "PurchaseOrderLine")]

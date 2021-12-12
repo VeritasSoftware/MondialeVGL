@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace MondialeVGL.OrderProcessor.Services.Models
+namespace MondialeVGL.OrderProcessor.Models
 {   
     [Serializable]
     [XmlRoot("PurchaseOrders")]

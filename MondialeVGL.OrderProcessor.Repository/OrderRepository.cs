@@ -1,6 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using MondialeVGL.OrderProcessor.Repository.Entities;
+using MondialeVGL.OrderProcessor.Entities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

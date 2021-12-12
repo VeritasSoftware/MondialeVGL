@@ -1,6 +1,6 @@
-﻿using MondialeVGL.OrderProcessor.Repository;
-using MondialeVGL.OrderProcessor.Repository.Entities;
-using MondialeVGL.OrderProcessor.Services.Models;
+﻿using MondialeVGL.OrderProcessor.Entities;
+using MondialeVGL.OrderProcessor.Models;
+using MondialeVGL.OrderProcessor.Repository;
 using System;
 using System.Threading.Tasks;
 

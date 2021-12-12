@@ -1,4 +1,4 @@
-﻿using MondialeVGL.OrderProcessor.Services.Models;
+﻿using MondialeVGL.OrderProcessor.Models;
 using System;
 using System.Threading.Tasks;
 

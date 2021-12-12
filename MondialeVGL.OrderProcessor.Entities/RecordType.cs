@@ -1,4 +1,4 @@
-﻿namespace MondialeVGL.OrderProcessor.Repository.Entities
+﻿namespace MondialeVGL.OrderProcessor.Entities
 {
     public enum RecordType
     {

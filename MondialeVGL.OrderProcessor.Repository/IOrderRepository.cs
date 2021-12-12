@@ -1,4 +1,4 @@
-﻿using MondialeVGL.OrderProcessor.Repository.Entities;
+﻿using MondialeVGL.OrderProcessor.Entities;
 using System;
 using System.Threading.Tasks;
 
