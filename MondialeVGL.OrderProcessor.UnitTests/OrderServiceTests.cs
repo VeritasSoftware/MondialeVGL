@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using Xunit;
 
 namespace MondialeVGL.OrderProcessor.UnitTests
@@ -55,11 +56,32 @@ namespace MondialeVGL.OrderProcessor.UnitTests
 
             //Assert
             Assert.NotNull(doc);
-            Assert.Equal(4, doc.Descendants().Count(node => node.Name == XName.Get("PurchaseOrder")));
+            Assert.Equal(4, doc.Descendants(XName.Get("PurchaseOrder")).Count());
+            Assert.Equal(4, doc.XPathSelectElements("//PurchaseOrders/PurchaseOrder").Count());
             Assert.NotNull(doc.Descendants().SingleOrDefault(node => node.Value == "PO2008-01"));
+            Assert.Equal(2, doc.Descendants().SingleOrDefault(node => node.Value == "PO2008-01")
+                                             .Parent
+                                             .Descendants(XName.Get("Lines"))
+                                             .Descendants(XName.Get("PurchaseOrderLine")).Count());
+            Assert.Equal(2, doc.XPathSelectElements("//PurchaseOrder[1]/Lines/PurchaseOrderLine").Count());
             Assert.NotNull(doc.Descendants().SingleOrDefault(node => node.Value == "PO2008-02"));
+            Assert.Equal(2, doc.Descendants().SingleOrDefault(node => node.Value == "PO2008-02")
+                                             .Parent
+                                             .Descendants(XName.Get("Lines"))
+                                             .Descendants(XName.Get("PurchaseOrderLine")).Count());
+            Assert.Equal(2, doc.XPathSelectElements("//PurchaseOrder[2]/Lines/PurchaseOrderLine").Count());
             Assert.NotNull(doc.Descendants().SingleOrDefault(node => node.Value == "PO2008-03"));
+            Assert.Single(doc.Descendants().SingleOrDefault(node => node.Value == "PO2008-03")
+                                             .Parent
+                                             .Descendants(XName.Get("Lines"))
+                                             .Descendants(XName.Get("PurchaseOrderLine")));
+            Assert.Single(doc.XPathSelectElements("//PurchaseOrder[3]/Lines/PurchaseOrderLine"));
             Assert.NotNull(doc.Descendants().SingleOrDefault(node => node.Value == "PO2008-04"));
+            Assert.Equal(3, doc.Descendants().SingleOrDefault(node => node.Value == "PO2008-04")
+                                             .Parent
+                                             .Descendants(XName.Get("Lines"))
+                                             .Descendants(XName.Get("PurchaseOrderLine")).Count());
+            Assert.Equal(3, doc.XPathSelectElements("//PurchaseOrder[4]/Lines/PurchaseOrderLine").Count());
         }
     }
 }
