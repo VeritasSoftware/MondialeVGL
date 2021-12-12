@@ -46,7 +46,10 @@ namespace MondialeVGL.OrderProcessor.Repository
                     catch(Exception ex)
                     {
                         ordersResult.Errors.Add(ex);
-                        OnReadError?.Invoke(ex);
+                        if (OnReadError != null)
+                        {
+                            await OnReadError.Invoke(ex);
+                        }
                         isNewOrder = false;
                         currentOrder = null;
                         continue;
@@ -71,7 +74,10 @@ namespace MondialeVGL.OrderProcessor.Repository
                         catch(Exception ex)
                         {
                             ordersResult.Errors.Add(ex);
-                            OnReadError?.Invoke(ex);
+                            if (OnReadError != null)
+                            {
+                                await OnReadError.Invoke(ex);
+                            }                            
                             currentOrder = null;
                             continue;
                         }
@@ -87,7 +93,10 @@ namespace MondialeVGL.OrderProcessor.Repository
                         catch (Exception ex)
                         {
                             ordersResult.Errors.Add(ex);
-                            OnReadError?.Invoke(ex);
+                            if (OnReadError != null)
+                            {
+                                await OnReadError.Invoke(ex);
+                            }
                             continue;
                         }                      
                     }
