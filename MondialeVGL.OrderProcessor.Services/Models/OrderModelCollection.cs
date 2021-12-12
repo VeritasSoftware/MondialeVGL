@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace MondialeVGL.OrderProcessor.Services.Models
-{
+{   
     [Serializable]
-    [XmlType(TypeName = "PurchaseOrders")]
+    [XmlRoot("PurchaseOrders")]
     public class OrderModelCollection
     {
-        [XmlArray("PurchaseOrder")]
-        [XmlArrayItem("PurchaseOrder")]
+        [XmlElement("PurchaseOrder")]
         public List<OrderModel> Orders { get; set; }
     }
 }

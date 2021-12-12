@@ -32,10 +32,13 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         [Fact]
         public async Task GetOrdersAsync_Success()
         {
+            //Arrange
             var repository = _serviceProvider.GetRequiredService<IOrderRepository>();
 
+            //Act
             var ordersResult = await repository.GetOrdersAsync();
 
+            //Assert
             Assert.Equal(4, ordersResult.Orders.Orders.Count);
             Assert.False(ordersResult.HasErrors);
             Assert.Equal("PO2008-01", ordersResult.Orders.Orders.ElementAt(0).Header.PurchaseOrderNumber);
@@ -51,10 +54,13 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         [Fact]
         public async Task GetOrdersAsync_BadInputData_Failure()
         {
+            //Arrange
             IOrderRepository repository = new OrderRepository(@".\Interface Data - Bad Data.csv");
 
+            //Act
             var ordersResult = await repository.GetOrdersAsync();
 
+            //Assert
             Assert.Equal(2, ordersResult.Orders.Orders.Count);
             Assert.True(ordersResult.HasErrors);
             Assert.Equal(3, ordersResult.Errors.Count);
@@ -66,6 +72,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         [Fact]
         public async Task GetOrdersAsync_OnReadError_BadInputData_Failure()
         {
+            //Arrange
             var errors = new List<Exception>();
             
             IOrderRepository repository = new OrderRepository(@".\Interface Data - Bad Data.csv");            
@@ -80,8 +87,10 @@ namespace MondialeVGL.OrderProcessor.UnitTests
                 await Task.CompletedTask;
             };
 
+            //Act
             var ordersResult = await repository.GetOrdersAsync();
 
+            //Assert
             Assert.Equal(2, ordersResult.Orders.Orders.Count);
             Assert.True(ordersResult.HasErrors);
             Assert.Equal(3, ordersResult.Errors.Count);
