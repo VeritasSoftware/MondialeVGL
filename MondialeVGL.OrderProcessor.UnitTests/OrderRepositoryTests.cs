@@ -11,7 +11,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
 {
     public class OrderRepositoryTests
     {
-        private readonly ServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
         public OrderRepositoryTests()
         {

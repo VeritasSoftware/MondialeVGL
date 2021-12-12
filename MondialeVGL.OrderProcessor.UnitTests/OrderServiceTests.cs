@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MondialeVGL.OrderProcessor.Repository;
 using MondialeVGL.OrderProcessor.Services;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
 {
     public class OrderServiceTests
     {
-        private readonly ServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
         public OrderServiceTests()
         {
