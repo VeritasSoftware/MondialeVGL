@@ -39,10 +39,10 @@ namespace MondialeVGL.OrderProcessor.UnitTests
         public async Task GetOrdersXmlAsync_Success()
         {
             //Arrange
-            var repository = _serviceProvider.GetRequiredService<IOrderService>();
+            var service = _serviceProvider.GetRequiredService<IOrderService>();
 
             //Act
-            var ordersResult = await repository.GetOrdersXmlAsync();
+            var ordersResult = await service.GetOrdersXmlAsync();
 
             XDocument doc = null;
 
