@@ -29,7 +29,7 @@ The **OrderService** calls the repository to read the orders.
 
 Then, it maps the Entities to the Models using **Automapper**.
 
-The Models are set up with xml attributes for serialization.
+The Models are set up with xml serialization attributes.
 
 Then, it serializes the model to xml using **XmlSerializer**.
 
