@@ -79,10 +79,7 @@ namespace MondialeVGL.OrderProcessor.UnitTests
 
             repository.OnReadError += async error =>
             {
-                lock(this)
-                {
-                    errors.Add(error);
-                }
+                errors.Add(error);
 
                 await Task.CompletedTask;
             };
